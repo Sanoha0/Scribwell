@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Scribewell</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="desk">
+
+  <!-- Top bar: feels like a book's spine label, not an app toolbar -->
+  <header class="spine-bar">
+    <div class="spine-left">
+      <span class="brand">Scribewell</span>
+      <span class="doc-title" id="docTitle" contenteditable="true" spellcheck="false">Untitled Manuscript</span>
+    </div>
+    <div class="spine-right">
+      <button class="quill-btn" id="btnOpen" title="Open a manuscript">Open</button>
+      <button class="quill-btn" id="btnSave" title="Save manuscript">Save</button>
+      <button class="quill-btn" id="btnAsk" title="Ask the editor something">Ask the Editor</button>
+      <button class="quill-btn" id="btnSettings" title="Settings">Settings</button>
+      <span class="status-dot" id="statusDot" title="Idle"></span>
+    </div>
+  </header>
+
+  <main class="book">
+    <!-- The manuscript page itself -->
+    <section class="page-wrap">
+      <div class="page" id="pageScroll">
+        <textarea id="editor" placeholder="Begin your story here..." spellcheck="true"></textarea>
+      </div>
+      <div class="page-shadow"></div>
+    </section>
+
+    <!-- Margin: running feed of everything the AI editor notices -->
+    <aside class="margin" id="marginFeed">
+      <div class="margin-header">
+        <span class="margin-title">Marginalia</span>
+        <span class="margin-sub" id="wordCount">0 words</span>
+      </div>
+      <div class="margin-feed" id="feedList">
+        <div class="feed-empty">
+          The editor is waiting for you to write a little. Notes will gather here, like a reader scribbling in
+          the margins.
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Toasts float up from the margin edge -->
+  <div class="toast-stack" id="toastStack"></div>
+
+  <!-- Settings drawer -->
+  <div class="overlay" id="settingsOverlay">
+    <div class="settings-card">
+      <div class="settings-head">
+        <h2>The Editor's Desk</h2>
+        <button class="close-x" id="closeSettings">&times;</button>
+      </div>
+
+      <div class="settings-section">
+        <label class="settings-label">AI Backend</label>
+        <div class="switch-row">
+          <button class="switch-opt active" data-backend="openrouter" id="optOpenrouter">OpenRouter (cloud)</button>
+          <button class="switch-opt" data-backend="ollama" id="optOllama">Ollama (local)</button>
+        </div>
+      </div>
+
+      <div class="settings-section" id="openrouterFields">
+        <label class="settings-label">OpenRouter API Key</label>
+        <input type="password" id="openrouterKey" class="ink-input" placeholder="sk-or-v1-..." />
+        <label class="settings-label" style="margin-top:14px;">Model</label>
+        <input type="text" id="openrouterModel" class="ink-input" placeholder="openai/gpt-4o-mini" />
+        <p class="settings-hint">Get a key at openrouter.ai/keys. Paste it above — it's saved only on this computer.</p>
+      </div>
+
+      <div class="settings-section" id="ollamaFields" style="display:none;">
+        <label class="settings-label">Ollama URL</label>
+        <input type="text" id="ollamaUrl" class="ink-input" placeholder="http://localhost:11434" />
+        <label class="settings-label" style="margin-top:14px;">Model</label>
+        <input type="text" id="ollamaModel" class="ink-input" placeholder="llama3.1" />
+        <p class="settings-hint">Make sure Ollama is running locally (ollama serve) with this model pulled.</p>
+      </div>
+
+      <div class="settings-section">
+        <label class="settings-label">How often the editor reads</label>
+        <input type="range" id="pauseDelay" min="1000" max="6000" step="500" />
+        <p class="settings-hint" id="pauseDelayLabel">Reads back after 2.5s of silence</p>
+      </div>
+
+      <div class="settings-section">
+        <label class="settings-label">Standing instructions (always applied)</label>
+        <textarea id="customPrompts" class="ink-input ink-textarea" placeholder="e.g. Pay close attention to my magic system's rules and flag contradictions."></textarea>
+      </div>
+
+      <button class="quill-btn primary" id="saveSettings">Save Settings</button>
+    </div>
+  </div>
+
+  <!-- Ask the Editor modal -->
+  <div class="overlay" id="askOverlay">
+    <div class="settings-card">
+      <div class="settings-head">
+        <h2>Ask the Editor</h2>
+        <button class="close-x" id="closeAsk">&times;</button>
+      </div>
+      <p class="settings-hint">Ask anything about your manuscript so far — pacing, a character's arc, whether a clue lands.</p>
+      <textarea id="askInput" class="ink-input ink-textarea" placeholder="e.g. Does my protagonist's motivation feel earned by chapter 3?"></textarea>
+      <button class="quill-btn primary" id="submitAsk">Ask</button>
+      <div class="ask-response" id="askResponse"></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="renderer.js"></script>
+</body>
+</html>
