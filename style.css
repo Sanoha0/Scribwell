@@ -1,39 +1,84 @@
-:root {
-    --paper-color: #fdf6e3;
-    --ink-color: #2c3e50;
-    --sidebar-bg: #eaddc5;
-    --highlight: #d35400;
-    --accent-bg: #d4c4a8;
-}
 
-body { margin: 0; font-family: 'Georgia', serif; background-color: #2c3e50; display: flex; flex-direction: column; height: 100vh; }
-.top-bar { display: flex; justify-content: space-between; align-items: center; background: #1a252f; color: white; padding: 10px 20px; }
-.container { display: flex; flex-grow: 1; overflow: hidden; background: var(--paper-color); }
-.left-sidebar { width: 300px; background: var(--sidebar-bg); border-right: 2px solid var(--accent-bg); display: flex; flex-direction: column; }
-.sidebar-tabs { display: flex; }
-.tab-btn { flex: 1; background: #d4c4a8; padding: 12px; border: none; cursor: pointer; }
-.tab-btn.active { background: var(--sidebar-bg); border-bottom: 2px solid var(--highlight); }
-.tab-content { display: none; flex-direction: column; padding: 15px; }
-.tab-content.active { display: flex; }
-textarea { width: 100%; height: 150px; margin-bottom: 10px; }
-.book-page { flex-grow: 1; padding: 0 40px; max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; }
-#editor-container { flex-grow: 1; }
-.ai-sidebar { width: 300px; background: var(--sidebar-bg); padding: 20px; }
-
-/* Sims-Style Notification */
-#notification-container { position: fixed; top: 20px; right: 20px; z-index: 9999; }
-.sims-popup {
-    background: #e1f7ff;
-    border: 3px solid #007bbd;
-    border-radius: 15px;
-    padding: 20px;
-    width: 320px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    font-family: 'Arial', sans-serif;
-    color: #004a73;
-    position: relative;
-    margin-bottom: 15px;
-    animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+*{box-sizing:border-box}
+body{
+margin:0;
+height:100vh;
+display:grid;
+grid-template-columns:70px 1fr 320px;
+background:#232323;
+color:#ececec;
+font-family:Segoe UI,sans-serif;
 }
-.close-btn { position: absolute; top: 5px; right: 10px; cursor: pointer; font-weight: bold; font-size: 1.2rem; }
-@keyframes bounceIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.sidebar{
+background:#1d1d1d;
+border-right:1px solid #3b3b3b;
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:16px 0;
+gap:14px;
+}
+.logo,.icon{
+width:42px;height:42px;
+display:flex;align-items:center;justify-content:center;
+background:#2e2e2e;border-radius:12px;
+}
+.logo{background:#224b87}
+.spacer{flex:1}
+.editor-panel{display:flex;flex-direction:column}
+.toolbar{
+display:flex;justify-content:space-between;
+padding:16px;border-bottom:1px solid #3b3b3b;
+}
+.tools button{
+background:#303030;color:white;border:1px solid #444;
+padding:8px 12px;border-radius:8px;
+}
+.stats{
+padding:10px 16px;color:#86d45c;border-bottom:1px solid #3b3b3b;
+}
+.editor{
+flex:1;overflow:auto;padding:50px;
+font-size:20px;line-height:1.8;
+}
+.right-panel{
+border-left:1px solid #3b3b3b;
+padding:12px;
+overflow:auto;
+}
+.tabs{
+display:flex;gap:10px;margin-bottom:15px;
+}
+.tabs div{
+padding:10px 15px;background:#2c2c2c;border-radius:10px;
+}
+.active{background:#3b3b3b}
+.card{
+background:#2b2b2b;
+border:1px solid #444;
+border-radius:12px;
+padding:14px;
+margin-bottom:12px;
+}
+.card button{
+padding:8px 12px;
+}
+#msg{
+width:100%;
+padding:10px;
+background:#1f1f1f;
+color:white;
+border:1px solid #444;
+border-radius:8px;
+}
+.notification{
+position:fixed;
+top:20px;
+right:340px;
+width:300px;
+background:#f3f3f3;
+color:black;
+padding:12px;
+border-radius:12px;
+box-shadow:0 8px 25px rgba(0,0,0,.3);
+}

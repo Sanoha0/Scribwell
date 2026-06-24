@@ -1,65 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Master Writing Book</title>
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ScribeWell</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="sidebar">
+<div class="logo">✎</div>
+<div class="icon">📖</div>
+<div class="icon">👥</div>
+<div class="icon">🌎</div>
+<div class="icon">📈</div>
+<div class="spacer"></div>
+<div class="icon">⚙️</div>
+</div>
 
-    <header class="top-bar">
-        <div class="header-left">
-            <h1>The Master Writing Book</h1>
-            <button id="export-word-btn" class="export-btn">💾 Export to Word/Docs</button>
-        </div>
-        <div class="header-right">
-            <input type="password" id="api-key" placeholder="Enter OpenRouter API Key...">
-            <button id="save-key">Save Key</button>
-            <span id="status">Key not set</span>
-        </div>
-    </header>
+<div class="editor-panel">
+<div class="toolbar">
+<h2>Chapter 1 — The Beginning</h2>
+<div class="tools">
+<button>B</button>
+<button><i>I</i></button>
+<button>☰</button>
+<button>💾 Save</button>
+</div>
+</div>
 
-    <div class="container">
-        <!-- Sidebar -->
-        <aside class="left-sidebar">
-            <div class="sidebar-tabs">
-                <button id="tab-chapters-btn" class="tab-btn active">Chapters</button>
-                <button id="tab-lore-btn" class="tab-btn">Story Bible</button>
-            </div>
-            <div id="tab-chapters" class="tab-content active">
-                <button id="new-chapter-btn">+ New Chapter</button>
-                <ul id="chapter-list"></ul>
-            </div>
-            <div id="tab-lore" class="tab-content">
-                <label>Characters & Cast</label>
-                <textarea id="lore-characters"></textarea>
-                <label>Worldbuilding & Rules</label>
-                <textarea id="lore-world"></textarea>
-            </div>
-        </aside>
+<div class="stats">1240 words • ~5 min read • Saved</div>
 
-        <main class="book-page">
-            <input type="text" id="chapter-title-input" placeholder="Chapter Title...">
-            <div id="editor-container"><div id="editor"></div></div>
-            <div class="word-count">Word Count: <span id="word-count-display">0</span></div>
-        </main>
+<div class="editor" contenteditable="true">
+<h1>The Beginning</h1>
+<p>Start writing here...</p>
+</div>
+</div>
 
-        <!-- Right sidebar now just for custom prompts -->
-        <aside class="ai-sidebar">
-            <h2>AI Assistant</h2>
-            <div class="custom-prompt-area">
-                <input type="text" id="custom-prompt" placeholder="Ask a question (Press Enter)...">
-                <button id="send-prompt">Ask</button>
-            </div>
-        </aside>
-    </div>
+<div class="right-panel">
+<div class="tabs">
+<div class="active">AI Feed</div>
+<div>Chat</div>
+</div>
 
-    <!-- Sims-Style Notification Container -->
-    <div id="notification-container"></div>
+<div class="card">
+<h3>📘 Character Reminder</h3>
+<p>Princess Luna hasn't appeared since Chapter 2. Current Chapter: 25.</p>
+</div>
 
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <script src="app.js"></script>
+<div class="card">
+<h3>🧩 Plot Thread</h3>
+<p>The silver necklace hasn't appeared in 13 chapters.</p>
+</div>
+
+<div class="card">
+<h3>🎵 Atmosphere</h3>
+<p>Winter Fantasy Piano Instrumental</p>
+<button>Play</button>
+</div>
+
+<div class="card">
+<h3>💬 Ask AI</h3>
+<input id="msg" placeholder="Ask ScribeWell...">
+</div>
+</div>
+
+<div id="notify"></div>
+
+<script src="script.js"></script>
 </body>
 </html>
