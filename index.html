@@ -3,29 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Smart Writing Book</title>
+    <title>The Master Writing Book</title>
+    <!-- Include Quill Rich Text Editor CSS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <header class="top-bar">
+        <div class="header-left">
+            <h1>The Master Writing Book</h1>
+            <button id="export-word-btn" class="export-btn">💾 Export to Word/Docs</button>
+        </div>
+        <div class="header-right">
+            <input type="password" id="api-key" placeholder="Enter OpenRouter API Key...">
+            <button id="save-key">Save Key</button>
+            <span id="status">Key not set</span>
+        </div>
+    </header>
+
     <div class="container">
-        <!-- The Left Side: Your Writing Area -->
+        
+        <!-- LEFT SIDEBAR: Chapters and Lore -->
+        <aside class="left-sidebar">
+            <div class="sidebar-tabs">
+                <button id="tab-chapters-btn" class="tab-btn active">Chapters</button>
+                <button id="tab-lore-btn" class="tab-btn">Story Bible</button>
+            </div>
+
+            <!-- Chapters Section -->
+            <div id="tab-chapters" class="tab-content active">
+                <button id="new-chapter-btn">+ New Chapter</button>
+                <ul id="chapter-list">
+                    <!-- Chapters injected via JS -->
+                </ul>
+            </div>
+
+            <!-- Lore Section (AI Memory) -->
+            <div id="tab-lore" class="tab-content">
+                <p class="lore-hint">The AI automatically reads this section to remember your world and characters.</p>
+                <label>Characters & Cast</label>
+                <textarea id="lore-characters" placeholder="E.g., Sanoha Knight: A brave warrior with a dark past..."></textarea>
+                
+                <label>Worldbuilding & Rules</label>
+                <textarea id="lore-world" placeholder="E.g., The magic system works by..."></textarea>
+            </div>
+        </aside>
+
+        <!-- CENTER: Your Writing Area -->
         <main class="book-page">
-            <header>
-                <input type="password" id="api-key" placeholder="Enter OpenRouter API Key here...">
-                <button id="save-key">Save Key</button>
-                <span id="status">Key not set</span>
-            </header>
-            
-            <textarea id="editor" placeholder="The Rise of Cadance begins here... What awaits Sanoha Knight? Start typing to find out."></textarea>
+            <input type="text" id="chapter-title-input" placeholder="Chapter Title...">
+            <div id="editor-container">
+                <div id="editor"></div>
+            </div>
+            <div class="word-count">Word Count: <span id="word-count-display">0</span></div>
         </main>
 
-        <!-- The Right Side: AI Assistant Sidebar -->
+        <!-- RIGHT SIDEBAR: AI Assistant -->
         <aside class="ai-sidebar">
-            <h2>AI Notes & Reminders</h2>
+            <h2>AI Assistant</h2>
             <div id="ai-feed">
                 <div class="ai-message system">
-                    I am ready. I'll read along as you write. When you pause, I'll analyze the text for foreshadowing, pacing, and grammar.
+                    I am ready. I'll read your active chapter and your Story Bible context. When you pause, I'll provide feedback.
                 </div>
             </div>
             <div class="custom-prompt-area">
@@ -35,6 +74,8 @@
         </aside>
     </div>
 
+    <!-- Include Quill JS -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

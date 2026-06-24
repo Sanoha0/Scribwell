@@ -3,81 +3,206 @@
     --ink-color: #2c3e50;
     --sidebar-bg: #eaddc5;
     --highlight: #d35400;
+    --accent-bg: #d4c4a8;
 }
 
 body {
     margin: 0;
     font-family: 'Georgia', serif;
-    background-color: #2c3e50; /* Dark desk background */
+    background-color: #2c3e50;
     display: flex;
-    justify-content: center;
-    padding: 2rem;
+    flex-direction: column;
     height: 100vh;
     box-sizing: border-box;
 }
 
+/* Top Bar */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1a252f;
+    color: white;
+    padding: 10px 20px;
+    font-family: sans-serif;
+}
+
+.top-bar h1 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-family: 'Georgia', serif;
+    color: var(--paper-color);
+}
+
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.export-btn {
+    background: #27ae60;
+    font-weight: bold;
+}
+
+.export-btn:hover { background: #2ecc71; }
+
+#api-key { padding: 5px; border-radius: 3px; border: none; width: 220px;}
+#status { color: #f1c40f; font-size: 0.85rem;}
+
+/* Main Layout */
 .container {
     display: flex;
-    width: 100%;
-    max-width: 1400px;
-    background: var(--paper-color);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 50px rgba(0,0,0,0.05);
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-/* The Book Page */
-.book-page {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    border-right: 2px solid #d4c4a8; /* The fold of the book */
-    padding: 2rem;
-}
-
-header {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    font-family: sans-serif;
-    font-size: 0.8rem;
-}
-
-#api-key {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    width: 250px;
-}
-
-#editor {
     flex-grow: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    resize: none;
-    font-family: 'Georgia', serif;
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: var(--ink-color);
+    overflow: hidden;
+    background: var(--paper-color);
 }
 
-/* The Sidebar */
-.ai-sidebar {
-    flex: 1;
-    background-color: var(--sidebar-bg);
-    padding: 2rem;
+/* Left Sidebar (Chapters & Lore) */
+.left-sidebar {
+    width: 300px;
+    background: var(--sidebar-bg);
+    border-right: 2px solid var(--accent-bg);
     display: flex;
     flex-direction: column;
 }
 
-.ai-sidebar h2 {
-    margin-top: 0;
-    font-size: 1.2rem;
-    color: var(--highlight);
-    border-bottom: 1px solid var(--highlight);
-    padding-bottom: 10px;
+.sidebar-tabs {
+    display: flex;
 }
+
+.tab-btn {
+    flex: 1;
+    border-radius: 0;
+    background: #d4c4a8;
+    color: var(--ink-color);
+    font-weight: bold;
+    padding: 12px;
+}
+
+.tab-btn.active {
+    background: var(--sidebar-bg);
+    border-bottom: 2px solid var(--highlight);
+}
+
+.tab-content {
+    display: none;
+    flex-direction: column;
+    padding: 15px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.tab-content.active {
+    display: flex;
+}
+
+#new-chapter-btn {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+#chapter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#chapter-list li {
+    padding: 10px;
+    background: rgba(255,255,255,0.4);
+    margin-bottom: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    border-left: 3px solid transparent;
+}
+
+#chapter-list li:hover { background: rgba(255,255,255,0.8); }
+#chapter-list li.active {
+    background: white;
+    border-left-color: var(--highlight);
+    font-weight: bold;
+}
+
+/* Lore Section */
+.lore-hint {
+    font-size: 0.8rem;
+    color: #666;
+    font-family: sans-serif;
+    margin-top: 0;
+}
+
+.tab-content label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+}
+
+.tab-content textarea {
+    width: 100%;
+    height: 150px;
+    resize: vertical;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-family: 'Georgia', serif;
+    box-sizing: border-box;
+}
+
+/* Center Editor */
+.book-page {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 40px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#chapter-title-input {
+    font-size: 2rem;
+    font-family: 'Georgia', serif;
+    border: none;
+    background: transparent;
+    padding: 20px 0 10px 0;
+    outline: none;
+    color: var(--ink-color);
+    border-bottom: 1px dashed var(--accent-bg);
+    margin-bottom: 10px;
+}
+
+#editor-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.ql-toolbar.ql-snow { border: none !important; padding-left: 0 !important;}
+.ql-container.ql-snow { border: none !important; font-family: 'Georgia', serif !important; font-size: 1.2rem !important; }
+.ql-editor { padding: 10px 0 40px 0; line-height: 1.8; }
+
+.word-count {
+    text-align: right;
+    padding: 10px 0;
+    font-family: sans-serif;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* Right Sidebar (AI) */
+.ai-sidebar {
+    width: 350px;
+    background: var(--sidebar-bg);
+    border-left: 2px solid var(--accent-bg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ai-sidebar h2 { margin-top: 0; font-size: 1.1rem; color: var(--highlight); border-bottom: 1px solid var(--highlight); padding-bottom: 10px; }
 
 #ai-feed {
     flex-grow: 1;
@@ -85,38 +210,28 @@ header {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .ai-message {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.6);
     padding: 15px;
     border-left: 3px solid var(--highlight);
     font-size: 0.95rem;
     line-height: 1.5;
 }
 
-.custom-prompt-area {
-    display: flex;
-    gap: 10px;
-}
+.custom-prompt-area { display: flex; gap: 5px; }
+#custom-prompt { flex-grow: 1; padding: 10px; border: 1px solid #ccc; }
 
-#custom-prompt {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    font-family: sans-serif;
-}
-
+/* Buttons */
 button {
     background: var(--ink-color);
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 8px 12px;
     cursor: pointer;
     font-family: sans-serif;
+    border-radius: 4px;
 }
-
-button:hover {
-    background: var(--highlight);
-}
+button:hover { background: var(--highlight); }
