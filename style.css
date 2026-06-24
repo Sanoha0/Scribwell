@@ -222,7 +222,7 @@ body {
 }
 
 .custom-prompt-area { display: flex; gap: 5px; }
-#custom-prompt { flex-grow: 1; padding: 10px; border: 1px solid #ccc; }
+#custom-prompt { flex-grow: 1; padding: 10px; border: 1px solid #ccc; font-family: sans-serif;}
 
 /* Buttons */
 button {

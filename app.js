@@ -105,19 +105,16 @@ chapterTitleInput.addEventListener('input', () => {
 });
 
 quill.on('text-change', function() {
-    // Update word count
     const text = quill.getText().trim();
     const words = text.length > 0 ? text.split(/\s+/).length : 0;
     wordCountDisplay.innerText = words;
 
-    // Save content
     const chapter = chapters.find(c => c.id == currentChapterId);
     if (chapter) {
-        chapter.content = quill.root.innerHTML; // Save HTML for formatting
+        chapter.content = quill.root.innerHTML;
         saveData();
     }
 
-    // AI Trigger
     clearTimeout(typingTimer);
     if (text.length > 50) {
         typingTimer = setTimeout(() => analyzeWriting(text), PAUSE_TIME);
@@ -141,11 +138,10 @@ function loadChapter(id) {
     const chapter = chapters.find(c => c.id == id);
     if (chapter) {
         chapterTitleInput.value = chapter.title;
-        quill.root.innerHTML = chapter.content; // Load HTML formatting
+        quill.root.innerHTML = chapter.content;
         saveData();
         renderChapterList();
         
-        // Update word count on load
         const text = quill.getText().trim();
         wordCountDisplay.innerText = text.length > 0 ? text.split(/\s+/).length : 0;
     }
@@ -159,13 +155,12 @@ function renderChapterList() {
         if (ch.id == currentChapterId) li.classList.add('active');
         li.addEventListener('click', () => loadChapter(ch.id));
         
-        // Add a delete button to the li
         const delBtn = document.createElement('span');
         delBtn.innerText = " 🗑️";
         delBtn.style.float = "right";
         delBtn.style.fontSize = "0.8rem";
         delBtn.onclick = (e) => {
-            e.stopPropagation(); // prevent loading chapter
+            e.stopPropagation();
             if(confirm(`Delete ${ch.title}?`)) {
                 chapters = chapters.filter(c => c.id != ch.id);
                 if(chapters.length === 0) createNewChapter();
@@ -195,7 +190,7 @@ async function callOpenRouter(systemInstruction, userText) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                "model": "openai/gpt-4o-mini",
+                "model": "openai/gpt-4o-mini", // The default model
                 "messages": [
                     { "role": "system", "content": systemInstruction },
                     { "role": "user", "content": userText }
@@ -207,7 +202,39 @@ async function callOpenRouter(systemInstruction, userText) {
         aiFeed.removeChild(aiFeed.lastChild); // Remove loading state
         
         if (data.choices && data.choices[0]) {
-            addMessageToFeed(data.choices[0].message.content);
+            let responseText = data.choices[0].message.content;
+
+            // --- AUTO-FILL MAGIC ---
+            // Look for [CHARACTERS] tags and extract them
+            const charRegex = /\[CHARACTERS\]([\s\S]*?)\[\/CHARACTERS\]/i;
+            const charMatch = responseText.match(charRegex);
+            if (charMatch) {
+                // Append new info to the existing box
+                const newLore = charMatch[1].trim();
+                loreCharacters.value = (loreCharacters.value + "\n\n" + newLore).trim();
+                loreData.characters = loreCharacters.value;
+                saveData();
+                responseText = responseText.replace(charRegex, '').trim(); // Remove tags from chat
+                addMessageToFeed("✅ Added new character lore to your Story Bible!");
+            }
+
+            // Look for [WORLD] tags and extract them
+            const worldRegex = /\[WORLD\]([\s\S]*?)\[\/WORLD\]/i;
+            const worldMatch = responseText.match(worldRegex);
+            if (worldMatch) {
+                const newWorld = worldMatch[1].trim();
+                loreWorld.value = (loreWorld.value + "\n\n" + newWorld).trim();
+                loreData.world = loreWorld.value;
+                saveData();
+                responseText = responseText.replace(worldRegex, '').trim();
+                addMessageToFeed("✅ Updated Worldbuilding rules in your Story Bible!");
+            }
+
+            // If there's any normal chat text left, display it
+            if (responseText.trim().length > 0) {
+                addMessageToFeed(responseText);
+            }
+
         } else {
             addMessageToFeed("Error: Unexpected response format from OpenRouter.");
         }
@@ -217,15 +244,14 @@ async function callOpenRouter(systemInstruction, userText) {
     }
 }
 
-// Generate the System Prompt including the Lore
 function getContextPrompt() {
-    let context = "You are an expert creative writing mentor. Keep your notes conversational, concise, and helpful like a margin note.\n\n";
+    let context = "You are an expert creative writing mentor. Keep your notes conversational, concise, and helpful.\n\n";
     if (loreData.characters.trim() || loreData.world.trim()) {
         context += "=== STORY BIBLE CONTEXT ===\n";
         if (loreData.characters.trim()) context += `CHARACTERS:\n${loreData.characters}\n\n`;
         if (loreData.world.trim()) context += `WORLDBUILDING LORE:\n${loreData.world}\n\n`;
         context += "=========================\n";
-        context += "Keep this lore in mind when analyzing the text.\n";
+        context += "Keep this lore in mind.\n";
     }
     return context;
 }
@@ -236,13 +262,22 @@ function analyzeWriting(text) {
     callOpenRouter(systemPrompt, "Here is my latest text:\n" + text);
 }
 
+// --- ENTER KEY TO SEND ---
+customPromptInput.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        sendPromptBtn.click();
+    }
+});
+
 sendPromptBtn.addEventListener('click', () => {
     const question = customPromptInput.value.trim();
     const text = quill.getText().trim();
     if (!question) return;
 
     let systemPrompt = getContextPrompt();
-    systemPrompt += "The user has a specific question about their manuscript.";
+    systemPrompt += "\nIf the user asks you to write, generate, or update character lore, you MUST wrap the exact lore text inside [CHARACTERS] and [/CHARACTERS] tags so the system can save it.\n";
+    systemPrompt += "If they ask you to write or update worldbuilding, you MUST wrap the exact text inside [WORLD] and [/WORLD] tags.\n";
+    systemPrompt += "Place any conversational response outside of these tags.";
     
     const fullPrompt = `Here is my current story text:\n\n${text}\n\nMy question: ${question}`;
 
@@ -260,7 +295,6 @@ function addMessageToFeed(text) {
 
 // --- Export to Word/Google Docs (.doc) ---
 document.getElementById('export-word-btn').addEventListener('click', () => {
-    // Combine all chapters into a single HTML structure
     let exportHTML = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
     <head><meta charset='utf-8'><title>Exported Story</title>
     <style>
@@ -272,17 +306,15 @@ document.getElementById('export-word-btn').addEventListener('click', () => {
 
     chapters.forEach(ch => {
         exportHTML += `<h1>${ch.title}</h1>`;
-        exportHTML += ch.content; // Quill content is already HTML
+        exportHTML += ch.content;
     });
 
     exportHTML += `</body></html>`;
 
-    // Create a Blob with the Word MIME type
     const blob = new Blob(['\ufeff', exportHTML], {
         type: 'application/msword'
     });
 
-    // Download it
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
