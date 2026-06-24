@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Master Writing Book</title>
-    <!-- Include Quill Rich Text Editor CSS -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -23,50 +22,33 @@
     </header>
 
     <div class="container">
-        
-        <!-- LEFT SIDEBAR: Chapters and Lore -->
+        <!-- Sidebar -->
         <aside class="left-sidebar">
             <div class="sidebar-tabs">
                 <button id="tab-chapters-btn" class="tab-btn active">Chapters</button>
                 <button id="tab-lore-btn" class="tab-btn">Story Bible</button>
             </div>
-
-            <!-- Chapters Section -->
             <div id="tab-chapters" class="tab-content active">
                 <button id="new-chapter-btn">+ New Chapter</button>
-                <ul id="chapter-list">
-                    <!-- Chapters injected via JS -->
-                </ul>
+                <ul id="chapter-list"></ul>
             </div>
-
-            <!-- Lore Section (AI Memory) -->
             <div id="tab-lore" class="tab-content">
-                <p class="lore-hint">The AI automatically reads this section to remember your world and characters.</p>
                 <label>Characters & Cast</label>
-                <textarea id="lore-characters" placeholder="E.g., Sanoha Knight: A brave warrior with a dark past..."></textarea>
-                
+                <textarea id="lore-characters"></textarea>
                 <label>Worldbuilding & Rules</label>
-                <textarea id="lore-world" placeholder="E.g., The magic system works by..."></textarea>
+                <textarea id="lore-world"></textarea>
             </div>
         </aside>
 
-        <!-- CENTER: Your Writing Area -->
         <main class="book-page">
             <input type="text" id="chapter-title-input" placeholder="Chapter Title...">
-            <div id="editor-container">
-                <div id="editor"></div>
-            </div>
+            <div id="editor-container"><div id="editor"></div></div>
             <div class="word-count">Word Count: <span id="word-count-display">0</span></div>
         </main>
 
-        <!-- RIGHT SIDEBAR: AI Assistant -->
+        <!-- Right sidebar now just for custom prompts -->
         <aside class="ai-sidebar">
             <h2>AI Assistant</h2>
-            <div id="ai-feed">
-                <div class="ai-message system">
-                    I am ready. I'll read your active chapter and your Story Bible context. When you pause, I'll provide feedback.
-                </div>
-            </div>
             <div class="custom-prompt-area">
                 <input type="text" id="custom-prompt" placeholder="Ask a question (Press Enter)...">
                 <button id="send-prompt">Ask</button>
@@ -74,7 +56,9 @@
         </aside>
     </div>
 
-    <!-- Include Quill JS -->
+    <!-- Sims-Style Notification Container -->
+    <div id="notification-container"></div>
+
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="app.js"></script>
 </body>
