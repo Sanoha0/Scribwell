@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Smart Writing Book</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- The Left Side: Your Writing Area -->
+        <main class="book-page">
+            <header>
+                <input type="password" id="api-key" placeholder="Enter OpenRouter API Key here...">
+                <button id="save-key">Save Key</button>
+                <span id="status">Key not set</span>
+            </header>
+            
+            <textarea id="editor" placeholder="The Rise of Cadance begins here... What awaits Sanoha Knight? Start typing to find out."></textarea>
+        </main>
+
+        <!-- The Right Side: AI Assistant Sidebar -->
+        <aside class="ai-sidebar">
+            <h2>AI Notes & Reminders</h2>
+            <div id="ai-feed">
+                <div class="ai-message system">
+                    I am ready. I'll read along as you write. When you pause, I'll analyze the text for foreshadowing, pacing, and grammar.
+                </div>
+            </div>
+            <div class="custom-prompt-area">
+                <input type="text" id="custom-prompt" placeholder="Ask a specific question...">
+                <button id="send-prompt">Ask</button>
+            </div>
+        </aside>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

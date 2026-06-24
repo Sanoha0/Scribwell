@@ -1,0 +1,122 @@
+:root {
+    --paper-color: #fdf6e3;
+    --ink-color: #2c3e50;
+    --sidebar-bg: #eaddc5;
+    --highlight: #d35400;
+}
+
+body {
+    margin: 0;
+    font-family: 'Georgia', serif;
+    background-color: #2c3e50; /* Dark desk background */
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+    background: var(--paper-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 50px rgba(0,0,0,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* The Book Page */
+.book-page {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid #d4c4a8; /* The fold of the book */
+    padding: 2rem;
+}
+
+header {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+}
+
+#api-key {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 250px;
+}
+
+#editor {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    font-family: 'Georgia', serif;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--ink-color);
+}
+
+/* The Sidebar */
+.ai-sidebar {
+    flex: 1;
+    background-color: var(--sidebar-bg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.ai-sidebar h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: var(--highlight);
+    border-bottom: 1px solid var(--highlight);
+    padding-bottom: 10px;
+}
+
+#ai-feed {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.ai-message {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 15px;
+    border-left: 3px solid var(--highlight);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.custom-prompt-area {
+    display: flex;
+    gap: 10px;
+}
+
+#custom-prompt {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-family: sans-serif;
+}
+
+button {
+    background: var(--ink-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-family: sans-serif;
+}
+
+button:hover {
+    background: var(--highlight);
+}
