@@ -1,0 +1,128 @@
+:root {
+    --paper-color: #fdf6e3;
+    --ink-color: #2c3e50;
+    --sidebar-bg: #eaddc5;
+    --highlight: #d35400;
+}
+
+body {
+    margin: 0;
+    font-family: 'Georgia', serif;
+    background-color: #2c3e50;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+    background: var(--paper-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 50px rgba(0,0,0,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.book-page {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid #d4c4a8;
+    padding: 2rem;
+}
+
+header {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    align-items: center;
+}
+
+header input, header select, header button {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+button {
+    background: var(--ink-color);
+    color: white;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s;
+}
+
+button:hover { 
+    background: var(--highlight); 
+}
+
+#status {
+    font-weight: bold;
+    color: #27ae60;
+}
+
+#editor-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 150px);
+}
+
+/* Overriding Quill's default styles to match our book aesthetic */
+.ql-toolbar.ql-snow {
+    background: #f4ebd8;
+    border: none !important;
+    border-bottom: 1px solid #d4c4a8 !important;
+    border-radius: 4px 4px 0 0;
+}
+
+.ql-container.ql-snow {
+    border: none !important;
+    font-family: 'Georgia', serif !important;
+    font-size: 1.2rem !important;
+    color: var(--ink-color);
+}
+
+.ql-editor {
+    padding: 20px 0;
+    line-height: 1.8;
+}
+
+.ai-sidebar {
+    flex: 1;
+    background-color: var(--sidebar-bg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.ai-sidebar h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: var(--highlight);
+    border-bottom: 1px solid var(--highlight);
+    padding-bottom: 10px;
+}
+
+#ai-feed {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-right: 10px;
+}
+
+.ai-message {
+    background: rgba(255, 255, 255, 0.6);
+    padding: 15px;
+    border-left: 3px solid var(--highlight);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}

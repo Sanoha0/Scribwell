@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Smart Writing Book (Full Stack)</title>
+    <!-- Include Quill Rich Text Editor CSS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <main class="book-page">
+            <header>
+                <input type="password" id="api-key" placeholder="OpenRouter API Key...">
+                <select id="backend-select">
+                    <option value="openrouter">Use OpenRouter</option>
+                    <option value="ollama">Use Local Ollama</option>
+                </select>
+                <button id="save-btn">Save to Database</button>
+                <span id="status"></span>
+            </header>
+            
+            <!-- Quill Editor Container -->
+            <div id="editor-container">
+                <div id="editor"></div>
+            </div>
+        </main>
+
+        <aside class="ai-sidebar">
+            <h2>AI Story Bible & Notes</h2>
+            <div id="ai-feed">
+                <div class="ai-message system">
+                    Full-Stack engine active. I am connected to your database and ready to read along.
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Include Quill JS -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
